@@ -1,17 +1,6 @@
 export default [
   // user
   {
-    path: '/user',
-    component: '../layouts/UserLayout',
-    routes: [
-      {
-        name: 'login',
-        path: '/user/login',
-        component: './user/login',
-      },
-    ],
-  },
-  {
     path: '/',
     component: '../layouts/SecurityLayout',
     routes: [
@@ -22,38 +11,19 @@ export default [
         routes: [
           {
             path: '/',
-            redirect: '/welcome',
+            redirect: '/Main/Main',
           },
           {
-            path: '/welcome',
-            name: 'welcome',
-            icon: 'smile',
-            component: './Welcome',
-          },
-          {
-            path: '/admin',
-            name: 'admin',
-            icon: 'crown',
-            component: './Admin',
-            authority: ['admin'],
+            path: '/Main',
+            icon: 'profile',
+            name: 'Main',
             routes: [
               {
-                path: '/admin/sub-page',
-                name: 'sub-page',
-                icon: 'smile',
-                component: './Welcome',
-                authority: ['admin'],
+                path: '/Main/Main',
+                name: 'Main',
+                component: './Main/Main',
               },
             ],
-          },
-          {
-            name: 'list.table-list',
-            icon: 'table',
-            path: '/list',
-            component: './ListTableList',
-          },
-          {
-            component: './404',
           },
         ],
       },

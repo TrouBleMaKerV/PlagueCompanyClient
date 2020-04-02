@@ -32,6 +32,10 @@ export default defineConfig({
       changeOrigin: true,
       secure: false, //配置关闭证书签名验证
     },
+    '/nCoV': {
+      target: 'https://lab.isaaclin.cn/',
+      changeOrigin: true,
+    },
   },
   dynamicImport: {
     loading: '@/components/PageLoading/index',
@@ -83,6 +87,5 @@ export default defineConfig({
   manifest: {
     basePath: '/',
   },
-  proxy: proxy[REACT_APP_ENV || 'dev'],
   chainWebpack: webpackPlugin,
 });
