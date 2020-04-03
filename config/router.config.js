@@ -11,7 +11,7 @@ export default [
         routes: [
           {
             path: '/',
-            redirect: '/Main/Main',
+            redirect: '/Main/Province',
           },
           {
             path: '/Main',
@@ -19,9 +19,9 @@ export default [
             name: 'Main',
             routes: [
               {
-                path: '/Main/Main',
-                name: 'Main',
-                component: './Main/Main',
+                path: '/Main/Province',
+                name: 'Province',
+                component: './Main/Province',
               },
             ],
           },

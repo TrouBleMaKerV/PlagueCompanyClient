@@ -10,12 +10,14 @@ import {
   Input,
   Button,
   Select,
-  Table
+  Table,
+  Typography
 } from 'antd';
 //import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './main.less';
 import moment from 'moment';
 
+const { Title } = Typography;
 
 /* eslint react/no-multi-comp:0 */
 @connect(({ main, loading }) => ({
@@ -23,7 +25,7 @@ import moment from 'moment';
   loading: loading.models.main,
 }))
 
-class Main extends PureComponent {
+class Province extends PureComponent {
   state = {
   };
 
@@ -87,23 +89,45 @@ class Main extends PureComponent {
       loading,
     } = this.props;
     console.log(data);
-    return (
-        <Card size='small' bordered={false}>
-          <div>
-            <Table
-              size="middle"
-              className={styles.antTable}
-              rowClassName={styles.antTable2}
-              loading={loading}
-              rowKey='reportno'
-              dataSource={data.cities}
-              columns={this.columns}
-              pagination={{showQuickJumper:true,showSizeChanger:true}}
-            />
-          </div>
-        </Card>
+    return (     
+      <Card size='small' bordered={false}>
+        <Row gutter={16}>
+          <Col span= {6}>
+            <Card title = "现存确诊"> 
+              <h3 style = {{color:"#ff4d4f",'font-size': '24px'}}>{data.currentConfirmedCount}</h3>           
+            </Card>
+          </Col>
+          <Col span= {6}>
+            <Card title = "累计确诊"> 
+              <h3 style = {{color:"#faad14",'font-size': '24px'}}>{data.confirmedCount}</h3>           
+            </Card>
+          </Col>
+          <Col span= {6}>
+            <Card title = "治愈人数"> 
+                <h3 style = {{color:"#2bfa14",'font-size': '24px'}}>{data.curedCount}</h3>           
+            </Card>
+          </Col>
+          <Col span= {6}>
+            <Card title = "死亡人数"> 
+                <h3 style = {{color:"rgba(0, 0, 0, 0.45)",'font-size': '24px'}}>{data.curedCount}</h3>           
+            </Card>
+          </Col>
+        </Row>
+        <div>
+          <Table
+            size="middle"
+            className={styles.antTable}
+            rowClassName={styles.antTable2}
+            loading={loading}
+            rowKey='reportno'
+            dataSource={data.cities}
+            columns={this.columns}
+            pagination={{showQuickJumper:true,showSizeChanger:true}}
+          />
+        </div>
+      </Card>
     );
   }
 }
 
-export default Main;
+export default Province;
