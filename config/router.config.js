@@ -23,6 +23,11 @@ export default [
                 name: 'Province',
                 component: './Main/Province',
               },
+              {
+                path: '/Main/ChinaStatistic',
+                name: 'ChinaStatistic',
+                component: './Main/ChinaStatistic',
+              },
             ],
           },
         ],
