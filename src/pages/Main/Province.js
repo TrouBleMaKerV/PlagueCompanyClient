@@ -1,7 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 // import router from 'umi/router';
-
+import { Scene, PolygonLayer, LineLayer } from '@antv/l7';
+import { Mapbox } from '@antv/l7-maps';
 import {
   Row,
   Col,
@@ -28,7 +29,6 @@ const { Title } = Typography;
 class Province extends PureComponent {
   state = {
   };
-
   columns = [
     {
       title: '城市',
@@ -70,6 +70,52 @@ class Province extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'main/overall',
+    });
+    const scene = new Scene({
+      id: "map",
+      map: new Mapbox({
+        pitch: 0,
+        style: "dark",
+        center: [20, -3.69],
+        zoom: 2.5
+      })
+    });
+    scene.on('loaded', () => {
+      fetch('https://gw.alipayobjects.com/os/rmsportal/JToMOWvicvJOISZFCkEI.json')
+        .then(res => res.json())
+        .then(data => {
+          const colors = [
+            '#D7F9F0',
+            '#A6E1E0',
+            '#72BED6',
+            '#5B8FF9',
+            '#3474DB',
+            '#005CBE',
+            '#00419F',
+            '#00287E'
+          ];
+          const layer = new PolygonLayer({})
+            .source(data)
+            .color('name', colors)
+            .shape('fill')
+            .active(true)
+            .style({
+              opacity: 0.9
+            });
+
+          const layer2 = new LineLayer({
+            zIndex: 2
+          })
+            .source(data)
+            .color('#fff')
+            .size(0.3)
+            .style({
+              opacity: 1
+            });
+
+          scene.addLayer(layer);
+          scene.addLayer(layer2);
+        });
     });
   }
 
@@ -113,6 +159,7 @@ class Province extends PureComponent {
             </Card>
           </Col>
         </Row>
+        <div style = {{height:'500px'}} id="map"/>
         <div>
           <Table
             size="middle"
