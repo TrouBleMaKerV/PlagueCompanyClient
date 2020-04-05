@@ -75,9 +75,9 @@ class Province extends PureComponent {
       id: "map",
       map: new Mapbox({
         pitch: 0,
-        style: "dark",
-        center: [20, -3.69],
-        zoom: 2.5
+        style: "light",
+        center: [ 107.042225, 37.66565 ],
+        zoom: 3
       })
     });
     scene.on('loaded', () => {
