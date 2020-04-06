@@ -12,7 +12,7 @@ export default {
         payload: response,
       });
       console.log(response.results[0]);
-      if (callback) callback(response);
+      if (callback) callback(response.results[0]);
     },
   },
 

@@ -19,6 +19,11 @@ import styles from './main.less';
 import moment from 'moment';
 import { Line } from '@antv/g2plot';
 const { Title } = Typography;
+import echarts from 'echarts/lib/echarts'
+import 'echarts/map/js/province/hubei'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/visualMap'
+import 'echarts/lib/component/toolbox'
 
 /* eslint react/no-multi-comp:0 */
 @connect(({ main, loading }) => ({
@@ -64,58 +69,87 @@ class Province extends PureComponent {
     },
   ];
 
-
   componentDidMount() {
     const user = JSON.parse(localStorage.getItem("userinfo"));
     const { dispatch } = this.props;
+    let myChart = echarts.init(document.getElementById("map"));
+    var option = {
+        title: {
+            text: '现存确诊',
+        },
+        tooltip: {
+        },
+        visualMap: {
+            min: 0,
+            max: 574,
+            text: ['High', 'Low'],
+            realtime: false,
+            calculable: true,
+            inRange: {
+                color: ['lightskyblue', 'yellow', 'orangered']
+            }
+        },
+        series: [
+            {
+                name: '疫情地图',
+                type: 'map',
+                mapType: '湖北', // 自定义扩展图表类型
+                label: {
+                    show: true
+                },
+                data: [],
+                // 自定义名称映射
+            },
+        ]
+    }
+    let myChart1 = echarts.init(document.getElementById("map1"));
+    var option1 = {
+        title: {
+            text: '现存确诊',
+        },
+        tooltip: {
+        },
+        visualMap: {
+            min: 11,
+            max: 50008,
+            text: ['High', 'Low'],
+            realtime: false,
+            calculable: true,
+            inRange: {
+                color: ['lightskyblue', 'yellow', 'orangered']
+            }
+        },
+        series: [
+            {
+                name: '疫情地图',
+                type: 'map',
+                mapType: '湖北', // 自定义扩展图表类型
+                label: {
+                    show: true
+                },
+                data: [],
+                // 自定义名称映射
+            },
+        ]
+    }
     dispatch({
       type: 'main/overall',
-    });
-    const scene = new Scene({
-      id: "map",
-      map: new Mapbox({
-        pitch: 0,
-        style: "light",
-        center: [ 107.042225, 37.66565 ],
-        zoom: 3
-      })
-    });
-    scene.on('loaded', () => {
-      fetch('https://gw.alipayobjects.com/os/rmsportal/JToMOWvicvJOISZFCkEI.json')
-        .then(res => res.json())
-        .then(data => {
-          const colors = [
-            '#D7F9F0',
-            '#A6E1E0',
-            '#72BED6',
-            '#5B8FF9',
-            '#3474DB',
-            '#005CBE',
-            '#00419F',
-            '#00287E'
-          ];
-          const layer = new PolygonLayer({})
-            .source(data)
-            .color('name', colors)
-            .shape('fill')
-            .active(true)
-            .style({
-              opacity: 0.9
-            });
-
-          const layer2 = new LineLayer({
-            zIndex: 2
-          })
-            .source(data)
-            .color('#fff')
-            .size(0.3)
-            .style({
-              opacity: 1
-            });
-
-          scene.addLayer(layer);
-          scene.addLayer(layer2);
-        });
+      callback: response => {
+        for (var city in response.cities) {
+          var object = {
+            name:response.cities[city].cityName,
+            value:response.cities[city].currentConfirmedCount,
+          };
+          var object2 = {
+            name:response.cities[city].cityName,
+            value:response.cities[city].confirmedCount,
+          };
+          option.series[0].data.push(object);
+          option1.series[0].data.push(object2);
+        }
+        myChart.setOption(option);
+        myChart1.setOption(option1);
+      }
     });
     const data = [
       { year: '1991', value: 3 },
@@ -152,32 +186,32 @@ class Province extends PureComponent {
       main: {data},
       loading,
     } = this.props;
-    console.log(data);
     return (     
       <Card size='small' bordered={false}>
         <Row gutter={16}>
           <Col span= {6}>
             <Card title = "现存确诊"> 
-              <h3 style = {{color:"#ff4d4f",'font-size': '24px'}}>{data.currentConfirmedCount}</h3>           
+              <h3 style = {{color:"#ff4d4f",'fontSize': '24px'}}>{data.currentConfirmedCount}</h3>           
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "累计确诊"> 
-              <h3 style = {{color:"#faad14",'font-size': '24px'}}>{data.confirmedCount}</h3>           
+              <h3 style = {{color:"#faad14",'fontSize': '24px'}}>{data.confirmedCount}</h3>           
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "治愈人数"> 
-                <h3 style = {{color:"#2bfa14",'font-size': '24px'}}>{data.curedCount}</h3>           
+                <h3 style = {{color:"#2bfa14",'fontSize': '24px'}}>{data.curedCount}</h3>           
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "死亡人数"> 
-                <h3 style = {{color:"rgba(0, 0, 0, 0.45)",'font-size': '24px'}}>{data.curedCount}</h3>           
+                <h3 style = {{color:"rgba(0, 0, 0, 0.45)",'fontSize': '24px'}}>{data.curedCount}</h3>           
             </Card>
           </Col>
         </Row>
         <div style = {{height:'500px'}} id="map"/>
+        <div style = {{height:'500px'}} id="map1"/>
         <Row gutter={16}>
           <Col span= {6}>
             <Card title = "现存确诊">
@@ -206,7 +240,7 @@ class Province extends PureComponent {
             className={styles.antTable}
             rowClassName={styles.antTable2}
             loading={loading}
-            rowKey='reportno'
+            rowKey='cityName'
             dataSource={data.cities}
             columns={this.columns}
             pagination={{showQuickJumper:true,showSizeChanger:true}}
