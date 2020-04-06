@@ -206,7 +206,7 @@ class Province extends PureComponent {
           </Col>
           <Col span= {6}>
             <Card title = "死亡人数"> 
-                <h3 style = {{color:"rgba(0, 0, 0, 0.45)",'fontSize': '24px'}}>{data.curedCount}</h3>           
+                <h3 style = {{color:"rgba(0, 0, 0, 0.45)",'fontSize': '24px'}}>{data.deadCount}</h3>           
             </Card>
           </Col>
         </Row>
