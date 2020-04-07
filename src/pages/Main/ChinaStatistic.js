@@ -15,10 +15,9 @@ import {Line} from "@antv/g2plot";
 
 
 /* eslint react/no-multi-comp:0 */
-@connect(state => ({
-  china: state.china,
-  provinces: state.provinces,
-  line: state.line,
+@connect(({ main, loading }) => ({
+  main,
+  loading: loading.models.main,
 }))
 
 class ChinaStatistic extends PureComponent {
@@ -72,13 +71,13 @@ class ChinaStatistic extends PureComponent {
 
     const { dispatch } = this.props;
     dispatch({
-      type: 'chinaData/fetchChina',
+      type: 'main/fetchChina',
     });
      dispatch({
-       type: 'chinaData/fetchProvinces',
+       type: 'main/fetchProvinces',
      });
      dispatch({
-       type: 'chinaData/fetchLine',
+       type: 'main/fetchLine',
      });
 
      const {provinces, line}=this.props;

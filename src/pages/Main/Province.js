@@ -134,6 +134,9 @@ class Province extends PureComponent {
     }
     dispatch({
       type: 'main/overall',
+      payload: {
+        province:"湖北省"
+      },
       callback: response => {
         for (var city in response.cities) {
           var object = {

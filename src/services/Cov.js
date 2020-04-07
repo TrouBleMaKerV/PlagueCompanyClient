@@ -1,5 +1,13 @@
 import request from '@/utils/request';
 
 export async function overall(params) {
-    return request('/nCoV/api/area?province=%E6%B9%96%E5%8C%97%E7%9C%81&latest=true');
+    return request(`/nCoV/api/area?province=${params.province}&latest=true`);
+}
+
+export async function news(params) {
+    return request('/nCoV/api/news?page=1&num=50');
+}
+
+export async function rumors(params) {
+    return request('/nCoV/api/rumors?page=1&num=50');
 }

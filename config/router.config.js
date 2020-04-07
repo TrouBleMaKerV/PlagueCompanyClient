@@ -24,6 +24,16 @@ export default [
                 component: './Main/Province',
               },
               {
+                path: '/Main/News',
+                name: 'News',
+                component: './Main/News',
+              },
+              {
+                path: '/Main/Rumors',
+                name: 'Rumors',
+                component: './Main/Rumors',
+              },
+              {
                 path: '/Main/ChinaStatistic',
                 name: 'ChinaStatistic',
                 component: './Main/ChinaStatistic',
