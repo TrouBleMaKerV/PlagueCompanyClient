@@ -27,14 +27,14 @@ export default defineConfig({
     baseNavigator: true,
   },
   proxy: {
-    '/api': {
-      target: 'https://localhost:8080/',
-      changeOrigin: true,
-      secure: false, //配置关闭证书签名验证
-    },
     '/nCoV': {
       target: 'https://lab.isaaclin.cn/',
       changeOrigin: true,
+    },
+    '/province': {
+      target: 'http://172.19.240.128:7000',
+      changeOrigin: true,
+      secure: false, //配置关闭证书签名验证
     },
   },
   dynamicImport: {

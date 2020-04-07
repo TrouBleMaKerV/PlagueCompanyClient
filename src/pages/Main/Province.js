@@ -68,7 +68,6 @@ class Province extends PureComponent {
       ),
     },
   ];
-
   componentDidMount() {
     const user = JSON.parse(localStorage.getItem("userinfo"));
     const { dispatch } = this.props;
@@ -155,23 +154,62 @@ class Province extends PureComponent {
       }
     });
     const data = [
-      { year: '1991', value: 3 },
-      { year: '1992', value: 4 },
-      { year: '1993', value: 3.5 },
-      { year: '1994', value: 5 },
-      { year: '1995', value: 4.9 },
-      { year: '1996', value: 6 },
-      { year: '1997', value: 7 },
-      { year: '1998', value: 9 },
-      { year: '1999', value: 13 },
+          {
+        "provinceName": "湖北省",
+        "date": "04-02",
+        "currentCount": 1132,
+        "confirmedCount": 67802,
+        "suspectedCount": 0,
+        "curedCount": 63471,
+        "deadCount": 3199
+    },
+            {
+        "provinceName": "湖北省",
+        "date": "03-31",
+        "currentCount": 1461,
+        "confirmedCount": 67801,
+        "suspectedCount": 0,
+        "curedCount": 63153,
+        "deadCount": 3187
+    },
     ];
-    const linePlot = new Line('canvas', {
+    const linePlot1 = new Line(document.getElementById('canvas1'), {
       data,
-      xField: 'year',
-      yField: 'value',
+      xField: 'date',
+      yField: 'currentCount',
     });
+    const linePlot2 = new Line(document.getElementById('canvas2'), {
+      data,
+      xField: 'date',
+      yField: 'confirmedCount',
+    });
+    const linePlot3 = new Line(document.getElementById('canvas3'), {
+      data,
+      xField: 'date',
+      yField: 'curedCount',
+    });
+    const linePlot4 = new Line(document.getElementById('canvas4'), {
+      data,
+      xField: 'date',
+      yField: 'deadCount',
+    });
+    dispatch({
+      type: 'main/charts',
+      payload: {
+        name:"湖北省"
+      },
+      callback: response => {
+        linePlot1.changeData(response);
+        linePlot2.changeData(response);
+        linePlot3.changeData(response);
+        linePlot4.changeData(response);
 
-    linePlot.render();
+      }
+    });
+    linePlot1.render();
+    linePlot2.render();
+    linePlot3.render();
+    linePlot4.render();
   }
 
   previewItem = text => {
@@ -218,22 +256,22 @@ class Province extends PureComponent {
         <Row gutter={16}>
           <Col span= {6}>
             <Card title = "现存确诊">
-              <div style = {{height:'250px'}} id="canvas"></div>
+              <div style = {{height:'250px'}} id="canvas1"></div>
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "累计确诊"> 
-              <div style = {{height:'250px'}} id="canvas"></div>
+              <div style = {{height:'250px'}} id="canvas2"></div>
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "治愈人数">
-              <div style = {{height:'250px'}} id="canvas"></div> 
+              <div style = {{height:'250px'}} id="canvas3"></div> 
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "死亡人数">
-              <div style = {{height:'250px'}} id="canvas"></div> 
+              <div style = {{height:'250px'}} id="canvas4"></div> 
             </Card>
           </Col>
         </Row>

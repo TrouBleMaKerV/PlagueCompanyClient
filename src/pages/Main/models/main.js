@@ -1,4 +1,4 @@
-import { overall , news, rumors} from '@/services/Cov';
+import { overall , news, rumors, charts} from '@/services/Cov';
 export default {
   namespace: 'main',
   state: {
@@ -30,6 +30,10 @@ export default {
         payload: response,
       });
       if (callback) callback(response.results);
+    },
+    *charts({ payload,callback }, { call, put }) {
+      const response = yield call(charts, payload);
+      if (callback) callback(response);
     },
   },
 
