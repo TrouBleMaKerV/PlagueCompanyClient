@@ -10,7 +10,7 @@ import {
 //import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './News.less';
 import moment from 'moment';
-import logo from './logo.jpeg'
+import logo from './rumor.jpeg'
 /* eslint react/no-multi-comp:0 */
 @connect(({ main, loading }) => ({
   main,
