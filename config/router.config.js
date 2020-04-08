@@ -38,6 +38,17 @@ export default [
                 name: 'ChinaStatistic',
                 component: './Main/ChinaStatistic',
               },
+              {
+                path: '/Main/Country',
+                name: 'Country',
+                component: './Main/Country',
+                hideInMenu: 'true',//添加页不需要在menu上显示
+              },
+              {
+                path: '/Main/World',
+                name: 'World',
+                component: './Main/World',
+              },
             ],
           },
         ],

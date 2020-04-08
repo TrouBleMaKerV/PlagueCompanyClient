@@ -13,5 +13,17 @@ export async function rumors(params) {
 }
 
 export async function charts(params) {
-    return request(`/province/buildMerchantsInfo?name=${params.name}`);
+    return request(`/province/buildProvinceInfo?name=${params.name}`);
+}
+
+export async function world(params) {
+    return request(`/province/buildForeignInfo`);
+}
+
+export async function foroeignCharts(params) {
+    return request(`/province/buildProvinceInfo?name=${params.name}`);
+}
+
+export async function fourDataInfo(params) {
+    return request(`/province/buildFourDataInfo?name=${params.name}`);
 }
