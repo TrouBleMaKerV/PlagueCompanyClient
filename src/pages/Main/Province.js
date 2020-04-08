@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 // import router from 'umi/router';
-import { Scene, PolygonLayer, LineLayer } from '@antv/l7';
 import { Mapbox } from '@antv/l7-maps';
 import {
   Row,
