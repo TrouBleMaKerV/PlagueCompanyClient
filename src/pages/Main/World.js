@@ -72,49 +72,8 @@ class World extends PureComponent {
     const user = JSON.parse(localStorage.getItem("userinfo"));
     const { dispatch } = this.props;
     echarts.registerMap('world', world);
-    let myChart = echarts.init(document.getElementById("map"));
-    var option = {
-        title: {
-            text: '现存确诊',
-        },
-        tooltip: {
-        },
-        visualMap: {
-            min: 0,
-            max: 574,
-            text: ['High', 'Low'],
-            realtime: false,
-            calculable: true,
-            inRange: {
-                color: ['lightskyblue', 'yellow', 'orangered']
-            }
-        },
-        series: [
-            {
-                name: '疫情地图',
-                type: 'map',
-                mapType: 'world', // 自定义扩展图表类型
-                label: {
-                    show: true
-                },
-                data: [],
-                // 自定义名称映射
-            },
-        ]
-    }
     dispatch({
       type: 'main/world',
-      callback: response => {
-        for (var city in response) {
-          var object = {
-            name:response[city].provinceName,
-            value:response[city].currentCount,
-          };
-          option.series[0].data.push(object);
-        }
-        myChart.setOption(option);
-      //   myChart1.setOption(option1);
-      }
     });
     // const data = [
     //       {
