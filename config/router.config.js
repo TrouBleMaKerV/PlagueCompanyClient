@@ -22,6 +22,7 @@ export default [
                 path: '/Main/Province',
                 name: 'Province',
                 component: './Main/Province',
+                hideInMenu: 'true',//添加页不需要在menu上显示
               },
               {
                 path: '/Main/News',

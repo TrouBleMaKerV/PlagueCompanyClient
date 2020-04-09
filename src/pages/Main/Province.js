@@ -104,8 +104,8 @@ class Province extends PureComponent {
   componentDidMount() {
     const user = JSON.parse(localStorage.getItem("userinfo"));
     const { dispatch } = this.props;
-    // const name = sessionStorage.getItem('provinceName')
-    // const mapName = name.substring(0,2);
+    const name = sessionStorage.getItem('provinceName')
+    const mapName = name.substring(0,2);
     let myChart = echarts.init(document.getElementById("map"));
     var option = {
         title: {
@@ -127,7 +127,7 @@ class Province extends PureComponent {
             {
                 name: '疫情地图',
                 type: 'map',
-                mapType: '湖北', // 自定义扩展图表类型
+                mapType: mapName, // 自定义扩展图表类型
                 label: {
                     show: true
                 },
@@ -157,7 +157,7 @@ class Province extends PureComponent {
             {
                 name: '疫情地图',
                 type: 'map',
-                mapType: '湖北', // 自定义扩展图表类型
+                mapType: mapName, // 自定义扩展图表类型
                 label: {
                     show: true
                 },
@@ -169,7 +169,7 @@ class Province extends PureComponent {
     dispatch({
       type: 'main/overall',
       payload: {
-        province:"湖北省"
+        province:name
       },
       callback: response => {
         for (var city in response.cities) {
@@ -231,7 +231,7 @@ class Province extends PureComponent {
     dispatch({
       type: 'main/charts',
       payload: {
-        name:"湖北省"
+        name:name
       },
       callback: response => {
         linePlot1.changeData(response);
@@ -262,8 +262,9 @@ class Province extends PureComponent {
       main: {data},
       loading,
     } = this.props;
+        const name = sessionStorage.getItem('provinceName')
     return (     
-      <Card size='small' bordered={false}>
+      <Card bordered={false} title={name}>
         <Row gutter={16}>
           <Col span= {6}>
             <Card title = "现存确诊"> 
