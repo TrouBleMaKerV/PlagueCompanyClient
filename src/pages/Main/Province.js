@@ -19,7 +19,41 @@ import moment from 'moment';
 import { Line } from '@antv/g2plot';
 const { Title } = Typography;
 import echarts from 'echarts/lib/echarts'
+import 'echarts/map/js/province/anhui'
+import 'echarts/map/js/province/aomen'
+import 'echarts/map/js/province/beijing'
+import 'echarts/map/js/province/chongqing'
+import 'echarts/map/js/province/fujian'
+import 'echarts/map/js/province/gansu'
+import 'echarts/map/js/province/guangdong'
+import 'echarts/map/js/province/guangxi'
+import 'echarts/map/js/province/guizhou'
+import 'echarts/map/js/province/anhui'
+import 'echarts/map/js/province/hainan'
+import 'echarts/map/js/province/hebei'
+import 'echarts/map/js/province/heilongjiang'
+import 'echarts/map/js/province/henan'
 import 'echarts/map/js/province/hubei'
+import 'echarts/map/js/province/hunan'
+import 'echarts/map/js/province/jiangsu'
+import 'echarts/map/js/province/jiangxi'
+import 'echarts/map/js/province/jilin'
+import 'echarts/map/js/province/liaoning'
+import 'echarts/map/js/province/neimenggu'
+import 'echarts/map/js/province/ningxia'
+import 'echarts/map/js/province/qinghai'
+import 'echarts/map/js/province/shandong'
+import 'echarts/map/js/province/shanghai'
+import 'echarts/map/js/province/shanxi'
+import 'echarts/map/js/province/sichuan'
+import 'echarts/map/js/province/taiwan'
+import 'echarts/map/js/province/tianjin'
+import 'echarts/map/js/province/xianggang'
+import 'echarts/map/js/province/xinjiang'
+import 'echarts/map/js/province/xizang'
+import 'echarts/map/js/province/yunnan'
+import 'echarts/map/js/province/zhejiang'
+
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/visualMap'
 import 'echarts/lib/component/toolbox'
@@ -47,7 +81,7 @@ class Province extends PureComponent {
       dataIndex: 'confirmedCount',
     },
     {
-      title: '新增确诊',
+      title: '疑似确诊',
       dataIndex: 'suspectedCount',
     },
     {
@@ -70,6 +104,8 @@ class Province extends PureComponent {
   componentDidMount() {
     const user = JSON.parse(localStorage.getItem("userinfo"));
     const { dispatch } = this.props;
+    // const name = sessionStorage.getItem('provinceName')
+    // const mapName = name.substring(0,2);
     let myChart = echarts.init(document.getElementById("map"));
     var option = {
         title: {
@@ -103,7 +139,7 @@ class Province extends PureComponent {
     let myChart1 = echarts.init(document.getElementById("map1"));
     var option1 = {
         title: {
-            text: '现存确诊',
+            text: '累计确诊',
         },
         tooltip: {
         },
