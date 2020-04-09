@@ -3,6 +3,9 @@ import { chinaSummary, lineData, provinces } from '@/services/chinaData';
 const ChinaModel = {
   namespace: 'chinaData',
   state: {
+    china:{},
+    provinces:[],
+    line: []
 
   },
   effects: {
@@ -16,6 +19,8 @@ const ChinaModel = {
 
     *fetchProvinces(_, { call, put }) {
       const response = yield call(provinces);
+      console.log('model/province')
+      console.log(response)
       yield put({
         type: 'saveProvinces',
         payload: response,

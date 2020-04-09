@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { routerRedux} from 'dva/router'
+// import { routerRedux} from 'dva/router'
 // import router from 'umi/router';
 import {
   Row,
@@ -15,9 +15,11 @@ import {Line} from "@antv/g2plot";
 
 
 /* eslint react/no-multi-comp:0 */
-@connect(({ main, loading }) => ({
+@connect(({ main, loading ,chinaData }) => ({
   main,
   loading: loading.models.main,
+  chinaData,
+
 }))
 
 class ChinaStatistic extends PureComponent {
@@ -33,7 +35,7 @@ class ChinaStatistic extends PureComponent {
     },
     {
       title: '现存确诊',
-      dataIndex: 'currentConfirmedCount',
+      dataIndex: 'currentCount',
     },
     {
       title: '总共确诊',
@@ -61,79 +63,76 @@ class ChinaStatistic extends PureComponent {
     },
   ];
 
-
-  componentWillUnmount() {
-  }
-
    componentDidMount() {
     // 获取用户信息
     const user = JSON.parse(localStorage.getItem("userinfo"));
 
     const { dispatch } = this.props;
     dispatch({
-      type: 'main/fetchChina',
+      type: 'chinaData/fetchChina',
     });
      dispatch({
-       type: 'main/fetchProvinces',
+       type: 'chinaData/fetchProvinces',
      });
      dispatch({
-       type: 'main/fetchLine',
+       type: 'chinaData/fetchLine',
      });
 
-     const {provinces, line}=this.props;
+     console.log(this.props)
+     const {provinces, line}=this.props.chinaData;
     // 渲染地图
-     const scene = new Scene({
-       id: "map",
-       map: new Mapbox({
-         pitch: 0,
-         style: "light",
-         center: [ 107.042225, 37.66565 ],
-         zoom: 3
-       })
-     });
-     scene.on('loaded', () => {
-       fetch('https://gw.alipayobjects.com/os/rmsportal/JToMOWvicvJOISZFCkEI.json')
-         .then(res => res.json())
-         .then(data => {
-           const colors = [
-             '#D7F9F0',
-             '#A6E1E0',
-             '#72BED6',
-             '#5B8FF9',
-             '#3474DB',
-             '#005CBE',
-             '#00419F',
-             '#00287E'
-           ];
-           const layer = new PolygonLayer({})
-             .source(data)
-             .color('name', colors)
-             .shape('fill')
-             .active(true)
-             .style({
-               opacity: 0.9
-             });
-
-           const layer2 = new LineLayer({
-             zIndex: 2
-           })
-             .source(data)
-             .color('#fff')
-             .size(0.3)
-             .style({
-               opacity: 1
-             });
-
-           scene.addLayer(layer);
-           scene.addLayer(layer2);
-         });
-     });
+    //  const scene = new Scene({
+    //    id: "map",
+    //    map: new Mapbox({
+    //      pitch: 0,
+    //      style: "light",
+    //      center: [ 107.042225, 37.66565 ],
+    //      zoom: 3
+    //    })
+    //  });
+    //  scene.on('loaded', () => {
+    //    fetch('https://gw.alipayobjects.com/os/rmsportal/JToMOWvicvJOISZFCkEI.json')
+    //      .then(res => res.json())
+    //      .then(data => {
+    //        const colors = [
+    //          '#D7F9F0',
+    //          '#A6E1E0',
+    //          '#72BED6',
+    //          '#5B8FF9',
+    //          '#3474DB',
+    //          '#005CBE',
+    //          '#00419F',
+    //          '#00287E'
+    //        ];
+    //        const layer = new PolygonLayer({})
+    //          .source(data)
+    //          .color('name', colors)
+    //          .shape('fill')
+    //          .active(true)
+    //          .style({
+    //            opacity: 0.9
+    //          });
+    //
+    //        const layer2 = new LineLayer({
+    //          zIndex: 2
+    //        })
+    //          .source(data)
+    //          .color('#fff')
+    //          .size(0.3)
+    //          .style({
+    //            opacity: 1
+    //          });
+    //
+    //        scene.addLayer(layer);
+    //        scene.addLayer(layer2);
+    //      });
+    //  });
 
      // 渲染折线图
      const currentPlot = new Line('currentLine', {
        line,
        xField: 'date',
-       yField: 'currentValue',
+       yField: 'currentCount',
      });
      currentPlot.render();
 
@@ -144,7 +143,7 @@ class ChinaStatistic extends PureComponent {
     console.log(text.provinceName)
     sessionStorage.setItem('provinceName',text.provinceName);
     // 跳转到省份页面
-    this.props.dispatch(routerRedux.push(''));
+    // this.props.dispatch(routerRedux.push(''));
 
   };
 
@@ -155,28 +154,29 @@ class ChinaStatistic extends PureComponent {
     const {
       china,
       provinces,
-    } = this.props;
+    } = this.props.chinaData;
+    console.log(this.props)
     return (
       <Card  bordered={false} title='全国疫情'>
         <Card><Row gutter={16}>
           <Col span= {6}>
             <Card title = "现存确诊">
-              <h3 style = {{color:"#ff4d4f",'font-size': '24px'}}>{china.currentConfirmedCount}</h3>
+              <h3 style = {{color:"#ff4d4f",'font-size': '24px'}}>{china}</h3>
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "累计确诊">
-              <h3 style = {{color:"#faad14",'font-size': '24px'}}>{china.confirmedCount}</h3>
+              <h3 style = {{color:"#faad14",'font-size': '24px'}}>{china}</h3>
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "治愈人数">
-              <h3 style = {{color:"#2bfa14",'font-size': '24px'}}>{china.curedCount}</h3>
+              <h3 style = {{color:"#2bfa14",'font-size': '24px'}}>{china}</h3>
             </Card>
           </Col>
           <Col span= {6}>
             <Card title = "死亡人数">
-              <h3 style = {{color:"rgba(0, 0, 0, 0.45)",'font-size': '24px'}}>{china.deathCount}</h3>
+              <h3 style = {{color:"rgba(0, 0, 0, 0.45)",'font-size': '24px'}}>{china}</h3>
             </Card>
           </Col>
         </Row></Card>
