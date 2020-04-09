@@ -105,7 +105,7 @@ class Province extends PureComponent {
     const user = JSON.parse(localStorage.getItem("userinfo"));
     const { dispatch } = this.props;
     const name = sessionStorage.getItem('provinceName')
-    const mapName = name.substring(0,2);
+    const mapName = name.charAt(0)==='黑'|| name.charAt(0)==='内' ? name.substring(0,3) : name.substring(0,2);
     let myChart = echarts.init(document.getElementById("map"));
     var option = {
         title: {
