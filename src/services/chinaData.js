@@ -12,7 +12,6 @@ export async function provinces() {
   const req=request('/province/buildChinaInfo')
   console.log('provinces success')
   console.log(req)
-
   return req;
 }
 // 获取折线图数据

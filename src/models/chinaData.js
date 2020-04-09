@@ -17,7 +17,7 @@ const ChinaModel = {
       });
     },
 
-    *fetchProvinces(_, { call, put }) {
+    *fetchProvinces({callback}, { call, put }) {
       const response = yield call(provinces);
       console.log('model/province')
       console.log(response)
@@ -25,13 +25,16 @@ const ChinaModel = {
         type: 'saveProvinces',
         payload: response,
       });
+      if (callback) callback(response);
     },
-    *fetchLine(_, { call, put }) {
+    *fetchLine({callback}, { call, put }) {
       const response = yield call(lineData);
       yield put({
         type: 'saveLine',
         payload: response,
+
       });
+      if (callback) callback(response);
     },
   },
   reducers: {
